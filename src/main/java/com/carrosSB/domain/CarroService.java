@@ -2,6 +2,7 @@ package com.carrosSB.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,11 @@ public class CarroService {
 	}
 	
 	
-
+	public Optional<Carro> getcarroById(Long id){
+		return rep.findById(id);
+	}
+	
+	
 	public List<Carro> getCarrosFake(){
 		List<Carro> carros = new ArrayList<>();
 		
@@ -28,4 +33,32 @@ public class CarroService {
 		
 		return carros;
 	}
+
+
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
