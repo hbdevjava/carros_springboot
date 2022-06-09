@@ -16,6 +16,10 @@ public class CarroService {
 		return rep.findAll();
 	}
 	
+	public Iterable<Carro> getCarroByTipo(String tipo) {
+		
+		return rep.findByTipo(tipo);
+	}
 	
 	public Optional<Carro> getcarroById(Long id){
 		return rep.findById(id);
@@ -33,6 +37,8 @@ public class CarroService {
 		
 		return carros;
 	}
+
+
 
 
 	

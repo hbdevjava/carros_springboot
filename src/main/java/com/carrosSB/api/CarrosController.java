@@ -26,7 +26,12 @@ public class CarrosController {
 	}
 	
 	@GetMapping("/{id}")
-	public Optional<Carro> get(@PathVariable Long id){
+	public Optional<Carro> get(@PathVariable ("id") Long id){
 		return service.getcarroById(id);
+	}
+	
+	@GetMapping("/tipo/{tipo}")
+	public Iterable<Carro> getcarrosBytipo(@PathVariable ("tipo") String tipo){
+		return service.getCarroByTipo(tipo);
 	}
 }
