@@ -15,11 +15,11 @@ public class IndexController {
 	public String hello() {
 	     return "API dos Carros";
 	}
-	//para estudos
+	//Para estudo
 	/*@PostMapping("/login")//@RequestParam: le os parametro da query atraves da ?
 	public String login(@RequestParam("login") String login,@RequestParam("senha") String senha) {
 		return " login "  + login  + " senha " + senha;
-	}*/
+	}
 	
 	@GetMapping("/login/{login}/{senha}")//@PathVariable: le os parametro da query atraves da /
 	public String loginn(@PathVariable("login") String login,@PathVariable("senha") String senha) {
@@ -34,7 +34,7 @@ public class IndexController {
 	@GetMapping("/carro/tipo/{tipo}")//ex:http://localhost:8080/carro/tipo/1...
 	public String getCarroByTipo(@PathVariable("tipo") String tipo) {
 		return "lista by tipo " + tipo;
-	}
+	} */
 	
 	
 	
