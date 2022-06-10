@@ -17,24 +17,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.carrosSB.domain.Carro;
 import com.carrosSB.domain.CarroService;
+import com.carrosSB.domain.dto.CarroDTO;
 
 @RestController
 @RequestMapping("/api/v1/carros")
 //ex:http://localhost:8080/api/v1/carros/23 
-//ex: localhost:8080/api/v1/carros/tipo/luxo 
+//ex:http://localhost:8080/api/v1/carros/tipo/luxo 
 public class CarrosController {
 	@Autowired
 	private CarroService service;
 
 	@GetMapping
-	public ResponseEntity<Iterable<Carro>> get() {
+	public ResponseEntity<List<CarroDTO>> get() {
 		return ResponseEntity.ok(service.getCarros());
 		// return new ResponseEntity<>(service.getCarros(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity get(@PathVariable("id") Long id) {
-		Optional<Carro> carro = service.getcarroById(id);
+		Optional<CarroDTO> carro = service.getcarroById(id);
 
 		/*	return carro.isPresent() ? 
 				ResponseEntity.ok(carro.get()) : 
@@ -48,8 +49,8 @@ public class CarrosController {
 	}
 
 	@GetMapping("/tipo/{tipo}")
-	public ResponseEntity getcarrosBytipo(@PathVariable("tipo") String tipo) {
-		List<Carro> carros = service.getCarroByTipo(tipo);
+	public ResponseEntity <List<CarroDTO>> getcarrosBytipo(@PathVariable("tipo") String tipo) {
+		List<CarroDTO> carros = service.getCarroByTipo(tipo);
 		
 		return carros.isEmpty() ? ResponseEntity.noContent().build() : 
 			ResponseEntity.ok(carros);
@@ -77,5 +78,8 @@ public class CarrosController {
 
 		return "Carro Deletado com sucesso";
 	}
+
+	
+	
 
 }
