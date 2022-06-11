@@ -1,7 +1,10 @@
 package com.carrosSB.api;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.Servlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.carrosSB.domain.Carro;
 import com.carrosSB.domain.CarroService;
@@ -37,49 +41,58 @@ public class CarrosController {
 	public ResponseEntity get(@PathVariable("id") Long id) {
 		Optional<CarroDTO> carro = service.getcarroById(id);
 
-		/*	return carro.isPresent() ? 
-				ResponseEntity.ok(carro.get()) : 
-				ResponseEntity.notFound().build();
 		/*
-		 * if(carro.isPresent()) { return ResponseEntity.ok(carro.get()); }else { return
+		 * return carro.isPresent() ? ResponseEntity.ok(carro.get()) :
+		 * ResponseEntity.notFound().build(); /* if(carro.isPresent()) { return
+		 * ResponseEntity.ok(carro.get()); }else { return
 		 * ResponseEntity.notFound().build(); }
 		 */
-		 return carro.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+		return carro.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 
 	}
 
 	@GetMapping("/tipo/{tipo}")
-	public ResponseEntity <List<CarroDTO>> getcarrosBytipo(@PathVariable("tipo") String tipo) {
+	public ResponseEntity getcarrosBytipo(@PathVariable("tipo") String tipo) {
 		List<CarroDTO> carros = service.getCarroByTipo(tipo);
-		
-		return carros.isEmpty() ? ResponseEntity.noContent().build() : 
-			ResponseEntity.ok(carros);
+
+		return carros.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(carros);
 	}
 
 	// @RequestBody: pega o objeto completo, ele pega o Json do carro e converte
 	// para um objeto desde que eles tenham os mesmos atributos;
 	@PostMapping
-	public String post(@RequestBody Carro carro) {
-		Carro c = service.insert(carro);
+	public ResponseEntity post(@RequestBody Carro carro) {
 
-		return "Carro salvo com sucesso: " + c.getId();
+		try {
+			CarroDTO c = service.insert(carro);
+
+			URI location = getUri(c.getId());
+			return ResponseEntity.created(null).build();
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	private URI getUri(Long id) {
+		return ServletUriComponentsBuilder.fromCurrentRequest().path("/(id)").buildAndExpand(id).toUri();
 	}
 
 	@PutMapping("/{id}")
-	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
-		Carro c = service.update(carro);
+	public ResponseEntity  put(@PathVariable("id") Long id, @RequestBody Carro carro) {
+		CarroDTO c = service.update(carro, id);
 
-		return "Carro Atualizado com sucesso: " + c.getId();
+		return c != null?
+				ResponseEntity.ok(c) : 
+					ResponseEntity.notFound().build();	
 	}
 
 	@DeleteMapping("/{id}")
-	public String delete(@PathVariable("id") Long id) {
-		service.delete(id);
+	public ResponseEntity delete(@PathVariable("id") Long id) {
+		boolean ok = service.delete(id);
 
-		return "Carro Deletado com sucesso";
+		return ok ?
+				ResponseEntity.ok().build() : 
+					ResponseEntity.notFound().build();
 	}
-
-	
-	
 
 }

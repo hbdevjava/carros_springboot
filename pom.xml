@@ -7,7 +7,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.0</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>carrosSB</artifactId>
@@ -29,6 +29,8 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		
+		<!-- TEST -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -41,23 +43,30 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-	<!-- MySQL -->
+		<!-- MySQL -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
-	
-<!-- LOMBOK -->	
+
+
+		<!-- LOMBOK -->
 		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <version>1.18.24</version>
-		    <scope>provided</scope>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
 
+
+		<!-- MODEL -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 
 
 		<dependency>

@@ -1,5 +1,9 @@
 package com.carrosSB.domain.dto;
 
+
+
+import org.modelmapper.ModelMapper;
+
 import com.carrosSB.domain.Carro;
 
 import lombok.Data;
@@ -11,15 +15,18 @@ public class CarroDTO {
 	private String nome;
 	private String tipo;
 	
-	
-	public  CarroDTO(Carro c) {
+/*	public CarroDTO (Carro c) {
 		this.id = c.getId();
 		this.nome = c.getNome();
 		this.tipo = c.getTipo();
-		
+	}*/
+	
+	
+	
+	public static CarroDTO create (Carro c) {
+		ModelMapper modelMapper = new ModelMapper();
+		return  modelMapper.map(c, CarroDTO.class);
 	}
-	
-	
 	
 }
 
